@@ -25,6 +25,7 @@ const redirectUrl = (req)=> {
   return 'https' + '://' + req.get('host');
 };
 
+
 app.get('/facebook/login', (req, res, next)=> {
   const url = `https://www.facebook.com/v3.0/dialog/oauth?client_id=${FACEBOOK_APP_ID}&redirect_uri=${redirectUrl(req)}/facebook/login/callback&state={"{st=state123abc,ds=123456789}"}`;
   res.redirect(url);
@@ -32,9 +33,19 @@ app.get('/facebook/login', (req, res, next)=> {
 
 app.get('/facebook/login/callback', (req, res, next)=> {
   const code = req.query.code;
-  const url = `https://graph.facebook.com/v3.0/oauth/access_token?client_id=${FACEBOOK_APP_ID}&redirect_uri=${redirectUrl(req)}/facebook/login/callback&client_secret=${FACEBOOK_SECRET_ID}&code=${code}`
+  const url = `https://graph.facebook.com/v3.0/oauth/access_token?client_id=${FACEBOOK_APP_ID}&redirect_uri=${redirectUrl(req)}/facebook/login/callback&client_secret=${FACEBOOK_SECRET_ID}&code=${code}`;
   request(url, (err, resp, body)=> {
-    res.send(err || body);
+    if(err){
+      return res.send(err);
+    }
+    const accessToken = JSON.parse(body).access_token;
+    const _url = `https://graph.facebook.com/me?fields=id,email,name&access_token=${accessToken}`;
+    request(_url, (err, resp, body)=> {
+      if(err){
+        return res.send(err);
+      }
+      res.send(body);
+    });
   });
 });
 
