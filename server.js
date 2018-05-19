@@ -9,6 +9,12 @@ try{
 catch(ex){
 }
 
-app.get('/', (req, res)=> res.render(path.join(__dirname, 'index.html')));
+const { FACEBOOK_APP_ID } = process.env;
+if(!FACEBOOK_APP_ID){
+  console.log('set FACEBOOK_APP_ID');
+}
+console.log(FACEBOOK_APP_ID);
+
+app.get('/', (req, res)=> res.render(path.join(__dirname, 'index.html'), { FACEBOOK_APP_ID }));
 
 app.listen(3000);
