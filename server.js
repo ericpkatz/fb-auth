@@ -27,7 +27,7 @@ const redirectUrl = (req)=> {
 
 app.get('/facebook/login', (req, res, next)=> {
   const url = `https://www.facebook.com/v3.0/dialog/oauth?client_id=${FACEBOOK_APP_ID}&redirect_uri=${redirectUrl(req)}/facebook/login/callback&state={"{st=state123abc,ds=123456789}"}`;
-  res.redirect(url);
+  res.send(url);
 });
 
 app.get('/facebook/login/callback', (req, res, next)=> {
