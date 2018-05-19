@@ -22,7 +22,7 @@ app.get('/', (req, res)=> {
 });
 
 const redirectUrl = (req)=> {
-  return req.protocol + '://' + req.get('host');
+  return 'https' + '://' + req.get('host');
 };
 
 app.get('/facebook/login', (req, res, next)=> {
