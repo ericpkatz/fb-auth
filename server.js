@@ -66,7 +66,6 @@ try {
 }
 catch(ex){
   var server = require('http').createServer( app );
-
 }
 
 server.listen( port, function () {
