@@ -1,0 +1,2 @@
+- I used this link to generate key/cert locally
+- https://www.kevinleary.net/self-signed-trusted-certificates-node-js-express-js/
